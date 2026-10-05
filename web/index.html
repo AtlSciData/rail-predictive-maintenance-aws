@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Failure Threshold Explorer</title>
+<style>
+  :root { color-scheme: light; --surface:#fcfcfb; --panel:#ffffff; --border:#e3e2de; --grid:#ecebe7;
+    --text:#0b0b0b; --text2:#52514e; --muted:#7a7873; --accent:#2a78d6;
+    --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; }
+  @media (prefers-color-scheme: dark) { :root:where(:not([data-theme="light"])) { color-scheme: dark;
+    --surface:#1a1a19; --panel:#222221; --border:#363633; --grid:#2e2e2c; --text:#ffffff; --text2:#c3c2b7; --muted:#97968c;
+    --accent:#3987e5; --s1:#3987e5; --s2:#d95926; --s3:#199e70; } }
+  :root[data-theme="dark"] { color-scheme: dark; --surface:#1a1a19; --panel:#222221; --border:#363633; --grid:#2e2e2c;
+    --text:#ffffff; --text2:#c3c2b7; --muted:#97968c; --accent:#3987e5; --s1:#3987e5; --s2:#d95926; --s3:#199e70; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--surface); color:var(--text); font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  main { max-width:1080px; margin:0 auto; padding:24px 16px 48px; }
+  header { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; }
+  h1 { font-size:22px; margin:0 0 4px; } .sub { color:var(--text2); margin:0; max-width:62ch; }
+  button, select { font:inherit; color:var(--text); background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:6px 12px; cursor:pointer; }
+  button:focus-visible, select:focus-visible, input:focus-visible, svg:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .controls { display:flex; flex-wrap:wrap; gap:16px 24px; align-items:center; margin:20px 0 12px; padding:12px 16px; background:var(--panel); border:1px solid var(--border); border-radius:12px; }
+  .controls label { color:var(--text2); font-size:13px; display:flex; align-items:center; gap:8px; }
+  .slider { flex:1 1 320px; display:flex; align-items:center; gap:12px; }
+  .slider input[type=range] { flex:1; accent-color:var(--accent); }
+  .tval { font-variant-numeric:tabular-nums; font-weight:600; min-width:3.2em; }
+  .legend { display:flex; gap:8px; flex-wrap:wrap; margin:0 0 12px; }
+  .legend label { display:flex; align-items:center; gap:8px; padding:4px 12px 4px 8px; border:1px solid var(--border); border-radius:999px; background:var(--panel); cursor:pointer; user-select:none; }
+  .legend svg { width:16px; height:16px; }
+  .charts { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; }
+  .card { background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:12px 12px 8px; position:relative; }
+  .card h2 { font-size:14px; margin:0 0 2px 4px; } .card .hint { font-size:12px; color:var(--muted); margin:0 0 4px 4px; }
+  .card svg { width:100%; height:auto; display:block; touch-action:none; cursor:crosshair; }
+  .tip { position:absolute; pointer-events:none; background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:6px 10px; font-size:12px; box-shadow:0 2px 8px rgba(0,0,0,.15); display:none; white-space:nowrap; }
+  table { width:100%; border-collapse:collapse; font-size:13px; font-variant-numeric:tabular-nums; }
+  th, td { text-align:right; padding:8px 10px; border-bottom:1px solid var(--border); }
+  th:first-child, td:first-child { text-align:left; } th { color:var(--text2); font-weight:600; }
+  .tablewrap { overflow-x:auto; margin-top:16px; background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:4px 8px; }
+  .ok { color:var(--text); } .bad { font-weight:700; }
+  .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:8px; }
+  .verify { margin-top:16px; font-size:13px; color:var(--text2); } .verify code { background:var(--grid); padding:1px 6px; border-radius:4px; font-size:12px; }
+  .note { color:var(--muted); font-size:12px; margin-top:8px; }
+  .empty { padding:32px; text-align:center; color:var(--text2); background:var(--panel); border:1px dashed var(--border); border-radius:12px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <h1>Failure threshold explorer</h1>
+      <p class="sub">Predicting whether a turbofan engine fails within 30 cycles (NASA C-MAPSS, a proxy for locomotive component failure). Drag the threshold to move the operating point along the ROC and precision-recall curves.</p>
+    </div>
+    <button id="theme" type="button" aria-label="Toggle light and dark theme">Theme</button>
+  </header>
+
+  <div id="app"></div>
+</main>
+<script src="metrics.js"></script>
+<script src="data/site-data.js" onerror="window.SITE_DATA=null"></script>
+<script src="app.js"></script>
+</body>
+</html>

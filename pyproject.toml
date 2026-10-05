@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rulpm"
+version = "0.1.0"
+description = "Predictive maintenance on NASA C-MAPSS sensor time series (proxy for locomotive failure prediction)"
+requires-python = ">=3.10"
+dependencies = ["numpy", "pandas", "scikit-learn", "lightgbm", "xgboost", "shap", "matplotlib"]
+
+[tool.setuptools.packages.find]
+where = ["src"]

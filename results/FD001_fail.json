@@ -1,0 +1,71 @@
+{
+  "rf": {
+    "recall": 0.72,
+    "roc_auc": 0.9877333333333334,
+    "pr_auc": 0.9667495708969394,
+    "cv_pr_auc_mean": 0.9594055674527409,
+    "target_recall": 0.9,
+    "tuned": {
+      "threshold": 0.364220238095238,
+      "recall_at_thr": 0.76,
+      "precision_at_thr": 0.95,
+      "flagged": 20,
+      "missed_failures": 6,
+      "false_alarms": 1
+    },
+    "at_0.5": {
+      "threshold": 0.5,
+      "recall_at_thr": 0.72,
+      "precision_at_thr": 0.9473684210526315,
+      "flagged": 19,
+      "missed_failures": 7,
+      "false_alarms": 1
+    }
+  },
+  "lgbm": {
+    "recall": 0.72,
+    "roc_auc": 0.9818666666666667,
+    "pr_auc": 0.9505408515744005,
+    "cv_pr_auc_mean": 0.9643999192082978,
+    "target_recall": 0.9,
+    "tuned": {
+      "threshold": 0.13745262397856875,
+      "recall_at_thr": 0.84,
+      "precision_at_thr": 0.875,
+      "flagged": 24,
+      "missed_failures": 4,
+      "false_alarms": 3
+    },
+    "at_0.5": {
+      "threshold": 0.5,
+      "recall_at_thr": 0.72,
+      "precision_at_thr": 0.9473684210526315,
+      "flagged": 19,
+      "missed_failures": 7,
+      "false_alarms": 1
+    }
+  },
+  "xgb": {
+    "recall": 0.68,
+    "roc_auc": 0.9872,
+    "pr_auc": 0.9618560104147063,
+    "cv_pr_auc_mean": 0.9647472459521993,
+    "target_recall": 0.9,
+    "tuned": {
+      "threshold": 0.24908150732517242,
+      "recall_at_thr": 0.84,
+      "precision_at_thr": 0.9130434782608695,
+      "flagged": 23,
+      "missed_failures": 4,
+      "false_alarms": 2
+    },
+    "at_0.5": {
+      "threshold": 0.5,
+      "recall_at_thr": 0.68,
+      "precision_at_thr": 0.8947368421052632,
+      "flagged": 19,
+      "missed_failures": 8,
+      "false_alarms": 2
+    }
+  }
+}
