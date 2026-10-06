@@ -1,0 +1,32 @@
+{
+  "subset": "FD001",
+  "model": "lgbm",
+  "n_train_rows": 20631,
+  "n_test_engines": 100,
+  "n_features": 107,
+  "cv_oof": {
+    "recall": 0.8525806451612903,
+    "roc_auc": 0.9913821782979826,
+    "pr_auc": 0.9593395715194034
+  },
+  "test_at_0.5": {
+    "threshold": 0.5,
+    "recall_at_thr": 0.72,
+    "precision_at_thr": 0.9473684210526315,
+    "flagged": 19,
+    "missed_failures": 7,
+    "false_alarms": 1
+  },
+  "test_tuned": {
+    "threshold": 0.1100419729586513,
+    "recall_at_thr": 0.84,
+    "precision_at_thr": 0.9130434782608695,
+    "flagged": 23,
+    "missed_failures": 4,
+    "false_alarms": 2
+  },
+  "target_recall": 0.9,
+  "test_recall": 0.72,
+  "test_roc_auc": 0.984,
+  "test_pr_auc": 0.9557954014956782
+}
