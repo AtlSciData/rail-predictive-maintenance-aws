@@ -15,3 +15,7 @@ node_modules/
 
 data/NASA_*
 *.egg-info/
+
+build/
+data/glue_out/
+data/sm_out/
