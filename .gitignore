@@ -19,3 +19,5 @@ data/NASA_*
 build/
 data/glue_out/
 data/sm_out/
+data/sample_payload.json
+data/endpoint_out.json
