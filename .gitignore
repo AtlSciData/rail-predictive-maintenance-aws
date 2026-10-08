@@ -21,3 +21,5 @@ data/glue_out/
 data/sm_out/
 data/sample_payload.json
 data/endpoint_out.json
+data/drift_payload.json
+data/drift_out.json
