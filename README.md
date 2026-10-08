@@ -42,11 +42,19 @@ component-failure prediction (remaining useful life, and "fails within N cycles"
 - [ ] Hosted threshold explorer, demo video and slide deck
 
 ## AWS pipeline (FD001)
-```
-local export (CSV) -> S3 -> Glue PySpark job -> S3 (Parquet features)
-   -> SageMaker training job (LightGBM, script mode) -> model artifact in S3
-   -> custom inference container in ECR -> SageMaker serverless endpoint
-   -> endpoint logs -> CloudWatch metric filters -> dashboard + drift alarm -> SNS email
+```mermaid
+flowchart TD
+    A["Local export (CSV)"] --> B["S3: normalized data"]
+    B --> C["Glue PySpark job"]
+    C --> D["S3: Parquet features"]
+    D --> E["SageMaker training job (LightGBM)"]
+    E --> F["S3: model artifact"]
+    F --> G["SageMaker serverless endpoint"]
+    R["ECR: inference container image"] --> G
+    G -- "request logs" --> H["CloudWatch metric filters"]
+    H --> I["Dashboard"]
+    H --> J["Drift alarm"]
+    J --> K["SNS email"]
 ```
 Region us-east-1. Everything is on-demand or serverless, so nothing bills while idle apart from
 small S3/ECR/CloudWatch storage; the endpoint, alarm, dashboard and topic are deleted after a demo.
