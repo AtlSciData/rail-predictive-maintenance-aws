@@ -18,7 +18,37 @@ component-failure prediction (remaining useful life, and "fails within N cycles"
   score (late predictions cost more) for RUL; recall, ROC-AUC and PR-AUC for failure.
 - **No leakage:** cross-validation is grouped by engine; normalization, regime clustering
   and sensor selection are fit on training engines only; rolling features use past cycles only.
+## Data
+NASA **C-MAPSS** turbofan engine degradation simulation (Saxena and Goebel, NASA Ames
+Prognostics Data Repository): simulated run-to-failure sensor data for aircraft engines.
+The NASA files are not in this repo. Download them and put the 12 `.txt` files in `data/raw/`.
 
+The PHM Society mirror of NASA’s Prognostics Center of Excellence repository. It hosts the dataset (titled “Turbofan Engine Degradation Simulation Data Set”) as one zip:
+
+Direct download: https://phm-datasets.s3.amazonaws.com/NASA/6.+Turbofan+Engine+Degradation+Simulation+Data+Set.zip
+Repository page: https://data.phmsociety.org/nasa/
+
+| File | Contents |
+|---|---|
+| `train_FD00x.txt` | Engines run until failure; the last row of each engine is the failure point |
+| `test_FD00x.txt` | Same layout, but each engine is cut off at a random cycle before failure |
+| `RUL_FD00x.txt` | Remaining useful life (cycles) after the last test row, one value per test engine |
+
+Each row has 26 space-separated columns, no header: engine id, cycle, 3 operating settings
+(altitude, Mach number, throttle angle) and 21 sensors (temperatures, pressures, speeds, flows).
+Engine ids restart in every file. The files contain no RUL or failure label; `add_labels` computes them.
+
+| Subset | Operating conditions | Fault modes | Train / test engines |
+|---|---|---|---|
+| FD001 | 1 | 1 (high-pressure compressor) | 100 / 100 |
+| FD002 | 6 | 1 | 260 / 259 |
+| FD003 | 1 | 2 (compressor and fan) | 100 / 100 |
+| FD004 | 6 | 2 | 248 / 249 |
+
+*Operating conditions* are the altitude, speed and throttle combinations an engine runs under; they
+shift the sensors far more than wear does, so the pipeline normalizes sensors within each regime.
+*Fault modes* are the components that degrade; the files do not say which one an engine has.
+There are no timestamps, maintenance records or censored engines (every training engine fails).
 ## Approach
 1. Drop constant sensors.
 2. Cluster operating settings into regimes (KMeans) and z-score each sensor within its regime
