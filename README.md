@@ -72,20 +72,8 @@ There are no timestamps, maintenance records or censored engines (every training
 - [ ] Hosted threshold explorer, demo video and slide deck
 
 ## AWS pipeline (FD001)
-```mermaid
-flowchart TD
-    A["Local export (CSV)"] --> B["S3: normalized data"]
-    B --> C["Glue PySpark job"]
-    C --> D["S3: Parquet features"]
-    D --> E["SageMaker training job (LightGBM)"]
-    E --> F["S3: model artifact"]
-    F --> G["SageMaker serverless endpoint"]
-    R["ECR: inference container image"] --> G
-    G -- "request logs" --> H["CloudWatch metric filters"]
-    H --> I["Dashboard"]
-    H --> J["Drift alarm"]
-    J --> K["SNS email"]
-```
+
+[![AWS pipeline (FD001), annotated with code, inputs and outputs](docs/pipeline_annotated.png)](docs/pipeline_annotated.png)
 Region us-east-1. Everything is on-demand or serverless, so nothing bills while idle apart from
 small S3/ECR/CloudWatch storage; the endpoint, alarm, dashboard and topic are deleted after a demo.
 
