@@ -86,8 +86,10 @@ small S3/ECR/CloudWatch storage; the endpoint, alarm, dashboard and topic are de
 
 **SageMaker run on FD001 (LightGBM, 100 test engines, threshold 0.110 from out-of-fold data):**
 test ROC-AUC 0.984, PR-AUC 0.956; tuned recall 0.84, precision 0.91, 4 missed failures, 2 false
-alarms. The local pandas run gives about the same (ROC-AUC 0.982, recall 0.84); the small gap is
-not explained and is probably package-version or threading differences.
+alarms. The local pandas run (regenerated on a second PC with pinned package versions) gives ROC-AUC 0.982,
+tuned recall 0.88, precision 0.92, 3 missed failures, 2 false alarms. The difference from the
+SageMaker run is one engine at the threshold; it is not explained and is probably package-version or
+threading differences.
 
 **Drift monitoring demo.** Normal traffic flags about 23% of engines (23 of 100). A request with the
 rolling-mean features shifted (`scripts/make_drift_payload.py`) pushes the average flag rate above
@@ -106,17 +108,20 @@ Evaluated on each subset's test engines at their last observed cycle. Test sets 
 cycle or so between models are within noise. The NASA score sums over engines, so it is not
 comparable across subsets.
 
+The results were produced with the package versions pinned in [`requirements-lock.txt`](requirements-lock.txt)
+(`pip install -r requirements-lock.txt`, then `pip install -e .`); `requirements.txt` lists the unpinned dependencies.
+
 **Remaining useful life (RUL, capped at 125)** - best test RMSE per subset in bold
 
 | Subset | Model | Test RMSE | NASA score | CV RMSE |
 |---|---|---|---|---|
-| FD001 | LightGBM | **15.7** | 397 | 16.0 |
+| FD001 | LightGBM | **16.1** | 427 | 16.1 |
 | FD001 | XGBoost | 16.2 | 444 | 16.1 |
 | FD001 | Random Forest | 16.7 | 476 | 16.6 |
 | FD002 | LightGBM | **15.2** | 1067 | 16.2 |
 | FD002 | XGBoost | 15.5 | 1146 | 16.2 |
 | FD002 | Random Forest | 15.8 | 1279 | 16.6 |
-| FD003 | LightGBM | **16.2** | 625 | 14.4 |
+| FD003 | LightGBM | **16.1** | 599 | 14.4 |
 | FD003 | XGBoost | 16.5 | 642 | 14.3 |
 | FD003 | Random Forest | 17.2 | 941 | 14.9 |
 | FD004 | LightGBM | 17.4 | 1831 | 15.8 |
@@ -128,14 +133,14 @@ predictions (highest threshold with recall >= 0.9); the test set never picks the
 
 | Subset | Model | ROC-AUC | PR-AUC | Recall @0.5 | Recall tuned | Precision tuned | Missed (0.5 → tuned) | False alarms (0.5 → tuned) |
 |---|---|---|---|---|---|---|---|---|
-| FD001 | LightGBM | 0.982 | 0.951 | 0.72 | 0.84 | 0.88 | 7 → 4 | 1 → 3 |
+| FD001 | LightGBM | 0.982 | 0.951 | 0.72 | 0.88 | 0.92 | 7 → 3 | 2 → 2 |
 | FD001 | XGBoost | 0.987 | 0.962 | 0.68 | 0.84 | 0.91 | 8 → 4 | 2 → 2 |
 | FD001 | Random Forest | 0.988 | 0.967 | 0.72 | 0.76 | 0.95 | 7 → 6 | 1 → 1 |
 | FD002 | LightGBM | 0.994 | 0.981 | 0.97 | 0.97 | 0.92 | 2 → 2 | 3 → 5 |
 | FD002 | XGBoost | 0.994 | 0.982 | 0.97 | 0.97 | 0.92 | 2 → 2 | 4 → 5 |
 | FD002 | Random Forest | 0.991 | 0.972 | 0.97 | 0.97 | 0.87 | 2 → 2 | 5 → 9 |
 | FD003 | LightGBM | 0.996 | 0.986 | 0.85 | 0.85 | 0.94 | 3 → 3 | 1 → 1 |
-| FD003 | XGBoost | 0.998 | 0.990 | 0.85 | 0.85 | 0.94 | 3 → 3 | 1 → 1 |
+| FD003 | XGBoost | 0.998 | 0.990 | 0.80 | 0.80 | 0.94 | 4 → 4 | 1 → 1 |
 | FD003 | Random Forest | 0.994 | 0.977 | 0.80 | 0.90 | 0.90 | 4 → 2 | 2 → 2 |
 | FD004 | LightGBM | 0.989 | 0.961 | 0.91 | 0.92 | 0.86 | 5 → 4 | 8 → 8 |
 | FD004 | XGBoost | 0.990 | 0.969 | 0.89 | 0.91 | 0.87 | 6 → 5 | 7 → 7 |
