@@ -24,25 +24,25 @@
   },
   "lgbm": {
     "recall": 0.72,
-    "roc_auc": 0.9818666666666667,
-    "pr_auc": 0.9505408515744005,
-    "cv_pr_auc_mean": 0.9643999192082978,
+    "roc_auc": 0.9824,
+    "pr_auc": 0.9514584051586819,
+    "cv_pr_auc_mean": 0.9646230740923919,
     "target_recall": 0.9,
     "tuned": {
-      "threshold": 0.13745262397856875,
-      "recall_at_thr": 0.84,
-      "precision_at_thr": 0.875,
+      "threshold": 0.13680054079279189,
+      "recall_at_thr": 0.88,
+      "precision_at_thr": 0.9166666666666666,
       "flagged": 24,
-      "missed_failures": 4,
-      "false_alarms": 3
+      "missed_failures": 3,
+      "false_alarms": 2
     },
     "at_0.5": {
       "threshold": 0.5,
       "recall_at_thr": 0.72,
-      "precision_at_thr": 0.9473684210526315,
-      "flagged": 19,
+      "precision_at_thr": 0.9,
+      "flagged": 20,
       "missed_failures": 7,
-      "false_alarms": 1
+      "false_alarms": 2
     }
   },
   "xgb": {
