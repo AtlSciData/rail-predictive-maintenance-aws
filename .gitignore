@@ -23,3 +23,9 @@ data/sample_payload.json
 data/endpoint_out.json
 data/drift_payload.json
 data/drift_out.json
+
+# local data artifacts (NASA downloads, AWS outputs): never commit
+data/*
+!data/raw/
+data/raw/*
+!data/raw/.gitkeep
