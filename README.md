@@ -23,10 +23,13 @@ NASA **C-MAPSS** turbofan engine degradation simulation (Saxena and Goebel, NASA
 Prognostics Data Repository): simulated run-to-failure sensor data for aircraft engines.
 The NASA files are not in this repo. Download them and put the 12 `.txt` files in `data/raw/`.
 
-The PHM Society mirror of NASA’s Prognostics Center of Excellence repository. It hosts the dataset (titled “Turbofan Engine Degradation Simulation Data Set”) as one zip:
+The dataset (titled "Turbofan Engine Degradation Simulation Data Set") is hosted by the PHM Society,
+which mirrors NASA's Prognostics Center of Excellence repository, as one zip:
 
-Direct download: https://phm-datasets.s3.amazonaws.com/NASA/6.+Turbofan+Engine+Degradation+Simulation+Data+Set.zip
-Repository page: https://data.phmsociety.org/nasa/
+- [Direct download (zip)](https://phm-datasets.s3.amazonaws.com/NASA/6.+Turbofan+Engine+Degradation+Simulation+Data+Set.zip)
+- [Repository page](https://data.phmsociety.org/nasa/)
+
+The zip contains an inner `CMAPSSData.zip`; unzip both and copy the 12 `.txt` files into `data/raw/`.
 
 | File | Contents |
 |---|---|
